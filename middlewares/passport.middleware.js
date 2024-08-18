@@ -9,10 +9,7 @@ passport.use(new GoogleStrategy({
     clientSecret: process.env.OAUTH_CLIENT_SECRET,
 }, 
 (accessToken, refreshToken, profile, done) => {
-    console.log('profile',profile);
-     // Check if user with same email or id exists in DB if not create one and save in DB
      const token = jwt.sign({ email: profile.emails }, process.env.JWT_SECRET);
-     console.log("token : ",token);
      const user = {
          email: profile.emails,
          username: profile.username,
@@ -20,7 +17,6 @@ passport.use(new GoogleStrategy({
          profileUrl: profile.profileUrl,
          token
      };
-     // Now token and user are ready store them in DB
      done(null, user);
 }),
 );
