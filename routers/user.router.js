@@ -2,9 +2,14 @@ const express = require("express");
 const { route } = require("./auth.router");
 const authMiddleware = require("../middlewares/auth.middleware");
 const router = express.Router();
-const db = require("./../db/conn.js");
-const mongoose = require("mongoose");
-const JSON = require("JSON")
+
+const newController=require("./../controllers/user/new.controller.js");
+const profileController=require("./../controllers/user/profile.controller.js");
+const cartController=require("./../controllers/user/cart.controller.js");
+const addToCartController=require("./../controllers/user/add_to_cart.controller.js");
+const registeredController=require("./../controllers/user/registered.controller.js");
+const checkoutController=require("./../controllers/user/checkout.controller.js");
+
 router.use(authMiddleware);
 
 router.get("/", (req, res) => {
@@ -15,78 +20,11 @@ router.get("/", (req, res) => {
   }
 });
 
-router.post("/new", async (req, res) => {
-  if (res.auth) {
-    const {name,age,phone}=req.body;
-    const collection = await db.collection("users");
-    const new_user = {
-        "name":name,
-        "age":age,
-        "phone":phone,
-        "email":res.email,
-        "cart":[],
-        "registered":[]
-    }
-    result = await collection.insertOne(new_user);
-    res.json(result).status(201);
-  } else {
-    res.redirect("/");
-  }
-});
-
-router.get('/profile',async (req,res)=>{
-  if(res.auth){
-    const collection = await db.collection('users')
-    result = await collection.findOne({email:res.email},{projection:{cart:0,registered:0}})
-    res.json(result).status(200)
-
-  }else{
-    res.redirect("/");
-  }
-})
-
-router.get('/cart',async(req,res)=>{
-  if(res.auth){
-    const collection = await db.collection('users')
-    result = await collection.findOne({email:res.email},{projection:{cart:1}})
-    res.json(result.cart).status(200)
-  }else{
-    res.redirect("/");
-  }
-})
-router.get('/registered',async(req,res)=>{
-  if(res.auth){
-    const collection = await db.collection('users')
-    result = await collection.findOne({email:res.email},{projection:{registered:1}})
-    res.json(result.registered).status(200)
-  }else{
-    res.redirect("/");
-  }
-})
-
-router.post('/add_to_cart',async (req,res)=>{
-  if(res.auth){
-    const {events}=req.body;
-    const collection = await db.collection('users')
-    const cart = JSON.parse('['+(await collection.findOne({email:res.email},{projection:{cart:1}})).cart+']')
-    const result = await collection.updateOne({email:res.email},{$set:{cart:cart.concat(events)}})
-    res.json(result).status(200)
-  }else{
-    res.redirect("/");
-  }
-
-})
-router.post('/checkout',async (req,res)=>{
-  if(res.auth){
-    const {events}=req.body;
-    const collection = await db.collection('users')
-    const registered = JSON.parse('['+(await collection.findOne({email:res.email},{projection:{registered:1}})).registered+']')
-    const result = await collection.updateOne({email:res.email},{$set:{registered:registered.concat(events)}})
-    res.json(result).status(200)
-  }else{
-    res.redirect("/");
-  }
-
-})
+router.post("/new", newController)
+router.get('/profile',profileController)
+router.get('/cart',cartController)
+router.get('/registered',registeredController)
+router.post('/add_to_cart',addToCartController)
+router.post('/checkout',checkoutController)
 
 module.exports = router;
