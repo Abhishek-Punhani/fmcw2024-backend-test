@@ -20,8 +20,8 @@ app.use(express.json())
 
 app.get('/',(req,res)=>{res.send("server started")})
 
-const auth_router = require("../routers/auth.router.js")
-const user_router = require("../routers/user.router.js")
+const auth_router = require("./routers/auth.router.js")
+const user_router = require("./routers/user.router.js")
 
 const api=express.Router()
 api.use('/auth',auth_router)
