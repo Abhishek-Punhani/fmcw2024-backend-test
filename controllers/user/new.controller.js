@@ -15,6 +15,6 @@ module.exports = async (req, res) => {
     result = await collection.insertOne(new_user);
     res.json(result).status(201);
   } else {
-    res.redirect("/");
+    res.json({'message':'Forbidden'}).status(400);
   }
 };

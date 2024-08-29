@@ -21,6 +21,6 @@ module.exports = async (req, res) => {
     );
     res.json(result).status(200);
   } else {
-    res.redirect("/");
+    res.json({'message':'Forbidden'}).status(400);
   }
 };

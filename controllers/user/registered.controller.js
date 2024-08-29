@@ -9,7 +9,6 @@ module.exports = async (req, res) => {
     );
     res.json(result.registered).status(200);
   } else {
-    res.redirect("/");
+    res.json({'message':'Forbidden'}).status(400);
   }
 };
-// E
