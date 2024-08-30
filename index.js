@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-
+const passport = require('./middlewares/passport.middleware.js')
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
