@@ -17,12 +17,14 @@ router.get("/", (req, res) => {
 //     else res.json({'authToken':req.user.token,'newUser':true}).status(200)
 // });
 
-router.post("/login",async (req, res) => {
+router.post("/login", async (req, res) => {
   const { email } = req.body;
-  const collection = await db.collection('users')
-    const authToken = jwt.sign(email,process.env.JWT_SECRET);
-    const result = await collection.findOne({email:email})
-     res.json({'authToken':authToken,'newUser':result?false:true}).status(200)
+  const collection = await db.collection("users");
+  const authToken = await jwt.sign({ email: email }, process.env.JWT_SECRET);
+  const result = await collection.findOne({ email: email });
+  res
+    .json({ authToken: authToken, newUser: result ? false : true })
+    .status(200);
 });
 
 // router.get("/logout", (req, res) => {
