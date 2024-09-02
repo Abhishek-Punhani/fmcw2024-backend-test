@@ -3,14 +3,11 @@ const jwt = require("jsonwebtoken")
 module.exports=(req,res,next)=>{
     try{
         const token=req.get('Authorization').slice(7);
-        // const token=req.cookies['authToken'];
-        const email = jwt.verify(token,process.env.JWT_SECRET)['email'][0]['value'];
+        const email = jwt.verify(token,process.env.JWT_SECRET);
         res.email=email
-        res.auth=true
-        console.log("authorised");
+        // console.log("authorised");
+        next()
     }catch(err){
-        // console.log(err);
-        res.auth=false
+        res.json({"message":"invalid token"}).status(400)
     }
-    next()
 }

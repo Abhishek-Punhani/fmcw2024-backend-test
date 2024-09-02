@@ -18,12 +18,7 @@ const update_events_registered = async (email) => {
 };
 
 module.exports = async (req, res) => {
-  if (res.auth) {
-    // console.log(req.body);
-    const { screenshot } = req.body;
-    await update_events_registered(res.email)
-    res.json({"image_url":image_url}).status(200);
-  } else {
-    res.json({ message: "Forbidden" }).status(400);
-  }
+  const { screenshot } = req.body;
+  await update_events_registered(res.email);
+  res.json({ image_url: image_url }).status(200);
 };

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const passport = require("passport");
+// const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const db = require("./../db/conn.js");
 router.get("/", (req, res) => {
@@ -17,12 +17,12 @@ router.get("/", (req, res) => {
 //     else res.json({'authToken':req.user.token,'newUser':true}).status(200)
 // });
 
-router.get("/login",async (req, res) => {
-  const { authToken } = req.body;
+router.post("/login",async (req, res) => {
+  const { email } = req.body;
   const collection = await db.collection('users')
-    const email = jwt.verify(authToken,process.env.JWT_SECRET)['email'][0]['value'];
+    const authToken = jwt.sign(email,process.env.JWT_SECRET);
     const result = await collection.findOne({email:email})
-     res.json({'newUser':result?false:true}).status(200)
+     res.json({'authToken':authToken,'newUser':result?false:true}).status(200)
 });
 
 // router.get("/logout", (req, res) => {
