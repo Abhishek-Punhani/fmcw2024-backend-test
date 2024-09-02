@@ -18,7 +18,7 @@ const update_events_registered = async (email) => {
 };
 
 module.exports = async (req, res) => {
-  const { screenshot } = req.body;
+  const { image_url } = req.body;
   await update_events_registered(res.email);
   res.json({ image_url: image_url }).status(200);
 };
