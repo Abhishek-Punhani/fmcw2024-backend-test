@@ -15,7 +15,14 @@ app.use(
   })
 );
 
-app.use(cors());
+const corsOptions = {
+  // origin: process.env.CLIENT_API, // Specify your frontend's origin
+  origin:'*',
+  credentials: true, // This allows cookies to be sent
+  optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
+app.use(cors(corsOptions)); // Apply CORS middleware
 app.use(cookieParser());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
