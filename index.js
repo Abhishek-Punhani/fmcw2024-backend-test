@@ -17,7 +17,8 @@ app.use(
 );
 
 const corsOptions = {
-  origin: process.env.CLIENT_API, // Specify your frontend's origin
+  // origin: process.env.CLIENT_API, // Specify your frontend's origin
+  origin:'*',
   credentials: true, // This allows cookies to be sent
   optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
 };
