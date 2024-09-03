@@ -7,7 +7,7 @@ module.exports = async (req, res) => {
     name: name,
     age: age,
     phone: phone,
-    email: res.email.email,
+    email: res.email,
     cart: [],
     registered: [],
   };
