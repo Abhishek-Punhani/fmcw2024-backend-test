@@ -23,7 +23,7 @@ router.post("/login", async (req, res) => {
   const authToken = await jwt.sign(email, process.env.JWT_SECRET);
   const result = await collection.findOne({ email: email });
   res
-    .json({ authToken: authToken, newUser: result ? false : true })
+    .json({ authToken: authToken, newUser: !result})
     .status(200);
 });
 
