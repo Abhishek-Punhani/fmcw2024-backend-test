@@ -20,7 +20,7 @@ router.get("/", (req, res) => {
 router.post("/login", async (req, res) => {
   const { email } = req.body;
   const collection = await db.collection("users");
-  const authToken = await jwt.sign({ email: email }, process.env.JWT_SECRET);
+  const authToken = await jwt.sign(email, process.env.JWT_SECRET);
   const result = await collection.findOne({ email: email });
   res
     .json({ authToken: authToken, newUser: result ? false : true })
