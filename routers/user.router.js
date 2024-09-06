@@ -9,6 +9,7 @@ const addToCartController = require("./../controllers/user/add_to_cart.controlle
 const removeFromCartController = require("./../controllers/user/remove_from_cart.controller.js");
 const registeredController = require("./../controllers/user/registered.controller.js");
 const checkoutController = require("./../controllers/user/checkout.controller.js");
+const cartAndRegisteredController = require("../controllers/user/cart_and_registered.controller.js");
 
 router.use(authMiddleware);
 
@@ -20,6 +21,7 @@ router.post("/new", newController);
 router.get("/profile", profileController);
 router.get("/cart", cartController);
 router.get("/registered", registeredController);
+router.get("/cart_and_reg", cartAndRegisteredController);
 router.post("/add_to_cart", addToCartController);
 router.post("/remove_from_cart", removeFromCartController);
 router.post("/checkout", checkoutController);
