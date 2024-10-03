@@ -11,10 +11,11 @@ router.get("/", async (req, res) => {
     result.map(async (e) => {
       const result = await userCollection.findOne(
         { email: e.email },
-        { projection: { name: 1 } }
+        { projection: { name: 1,phone:1 } }
       );
       // console.log(result.name);
       e["name"] = result.name;
+      e["phone"]=result.phone;
     })
   );
   result.map((e) => {
